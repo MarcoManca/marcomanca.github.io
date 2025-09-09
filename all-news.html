@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All News - Marco Manca</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+</head>
+<body>
+    <a class="skip-link" href="#main">Skip to main content</a>
+    <header class="sticky-top bg-white shadow-sm" role="banner">
+        <nav class="navbar navbar-expand-lg navbar-light container" aria-label="Primary navigation">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="index.html" aria-label="Home">Marco Manca Researcher</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu" aria-controls="navMenu" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navMenu">
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item"><a class="nav-link" href="index.html#who">Who I am</a></li>
+                        <li class="nav-item"><a class="nav-link" href="index.html#research">Research Interests</a></li>
+                        <li class="nav-item"><a class="nav-link" href="index.html#news">News</a></li>
+                        <li class="nav-item"><a class="nav-link" href="index.html#publications">Publications</a></li>
+                        <li class="nav-item"><a class="nav-link" href="index.html#projects">Projects</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main id="main" class="container" role="main" tabindex="-1">
+        <a href="index.html#news" class="btn btn-link mt-4" aria-label="Back to News section on home page">&larr; Back to News</a>
+        <section class="py-5" aria-labelledby="all-news-heading" role="region">
+            <div class="container">
+                <h1 id="all-news-heading">All News</h1>
+                <div id="all-news-list"></div>
+            </div>
+        </section>
+    </main>
+    <footer class="py-4 mt-5 bg-dark text-white" role="contentinfo">
+        <div class="container d-flex flex-column flex-md-row justify-content-between align-items-center">
+            <small>&copy; 2025 Marco Manca - Senior Researcher at HIIS Lab - ISTI - CNR</small>
+            <nav aria-label="Footer navigation">
+                <ul class="list-inline mb-0">
+                    <li class="list-inline-item"><a class="text-white" href="sitemap.xml" target="_blank">Sitemap</a></li>
+                </ul>
+            </nav>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script>
+    // Fetch all news and group by year and month
+    document.addEventListener('DOMContentLoaded', function () {
+        fetch('https://apilab.isti.cnr.it/api/getNewsManca/all/0/0')
+            .then(response => response.json())
+            .then(newsList => {
+                if (!Array.isArray(newsList) || newsList.length === 0) {
+                    document.getElementById('all-news-list').innerHTML = '<p>No news available at the moment.</p>';
+                    return;
+                }
+                // Group news by year and month
+                const grouped = {};
+                newsList.forEach(news => {
+                    const date = new Date(news.data);
+                    const year = date.getFullYear();
+                    const month = date.toLocaleString('default', { month: 'long' });
+                    if (!grouped[year]) grouped[year] = {};
+                    if (!grouped[year][month]) grouped[year][month] = [];
+                    grouped[year][month].push(news);
+                });
+                let html = '';
+                Object.keys(grouped).sort((a, b) => b - a).forEach(year => {
+                    html += `<h2>${year}</h2>`;
+                    Object.keys(grouped[year]).sort((a, b) => new Date(`${b} 1, 2000`) - new Date(`${a} 1, 2000`)).forEach(month => {
+                        html += `<h3>${month}</h3><ul class="news-list">`;
+                        grouped[year][month].forEach(news => {
+                            // Format date in Italian
+                            const dateObj = new Date(news.data);
+                            const formattedDate = dateObj.toLocaleDateString('it-IT');
+                            html += `<li><article class="news-article"><h4>${news.titolo}</h4><span class="news-date">${formattedDate}</span><p>${news.anteprima}</p><button type='button' class='accordion-toggle' aria-expanded='false' aria-controls='news-details-${news.id}' id='accordion-btn-${news.id}' aria-label='Read more about ${news.titolo}'>Read more</button><div id='news-details-${news.id}' class='accordion-panel' role='region' aria-labelledby='accordion-btn-${news.id}' hidden tabindex='-1'>${news.testo}</div></article></li>`;
+                        });
+                        html += '</ul>';
+                    });
+                });
+                document.getElementById('all-news-list').innerHTML = html;
+
+                // Add accessible accordion logic
+                document.querySelectorAll('.accordion-toggle').forEach(button => {
+                    button.addEventListener('click', function () {
+                        const details = document.getElementById(this.getAttribute('aria-controls'));
+                        const expanded = this.getAttribute('aria-expanded') === 'true';
+                        this.setAttribute('aria-expanded', String(!expanded));
+                        if (expanded) {
+                            details.hidden = true;
+                            details.tabIndex = -1;
+                        } else {
+                            details.hidden = false;
+                            details.tabIndex = 0;
+                            details.focus && details.focus();
+                        }
+                    });
+                });
+                document.querySelectorAll('.accordion-panel').forEach(details => {
+                    details.addEventListener('keydown', function (e) {
+                        if (e.key === 'Escape' || e.key === 'Esc') {
+                            const btn = document.getElementById(details.getAttribute('aria-labelledby'));
+                            if (btn && btn.getAttribute('aria-expanded') === 'true') {
+                                btn.setAttribute('aria-expanded', 'false');
+                                details.hidden = true;
+                                details.tabIndex = -1;
+                                btn.focus();
+                            }
+                        }
+                    });
+                });
+            })
+            .catch(() => {
+                document.getElementById('all-news-list').innerHTML = '<p>Error loading news.</p>';
+            });
+    });
+    </script>
+</body>
+</html>

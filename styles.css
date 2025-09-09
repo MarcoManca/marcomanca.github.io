@@ -1,0 +1,279 @@
+/* Project logo box for project cards */
+.project-logo {
+    width: 200px;
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f8f9fa;
+    border-radius: 1rem;
+    margin-left: auto;
+    margin-right: auto;
+    overflow: hidden;
+}
+
+.project-logo img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+/* Spacing and separation for news articles */
+#news-section .news-article {
+    margin-bottom: 2rem;
+    padding: 1.5rem 1.5rem 1rem 1.5rem;
+    border-bottom: 1px solid #e0e0e0;
+    background: #f7fafd;
+    border-radius: 1rem;
+    box-shadow: 0 2px 8px 0 rgba(13, 110, 253, 0.06);
+    transition: box-shadow 0.2s;
+}
+
+#news-section .news-article:hover,
+#news-section .news-article:focus-within {
+    box-shadow: 0 4px 16px 0 rgba(13, 110, 253, 0.13);
+}
+
+#news-section .news-article h3 {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: #111;
+    margin-bottom: 0.5rem;
+}
+
+#news-section .news-article p {
+    color: #333;
+    font-size: 1.05rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Accessible accordion styles for news section */
+.accordion-toggle {
+    background: none;
+    border: none;
+    color: #0d6efd;
+    text-decoration: underline;
+    cursor: pointer;
+    padding: 0;
+    font-size: 1em;
+}
+
+.accordion-toggle:focus {
+    outline: 3px solid #ffbf47;
+    outline-offset: 2px;
+}
+
+.accordion-panel {
+    margin-top: 0.5em;
+    padding: 0.5em 0 0.5em 1.5em;
+    border-left: 3px solid #0d6efd;
+    background: #f8f9fa;
+}
+
+:root {
+    --brand: #0b5cff;
+    /* ensure good contrast */
+    --muted: #6c757d;
+    --bg: #ffffff;
+}
+
+/* Skip link visible on focus */
+.skip-link {
+    position: absolute;
+    left: -999px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+}
+
+.skip-link:focus {
+    /* move on-screen and make visually prominent for keyboard users */
+    left: 1rem;
+    top: 1rem;
+    width: auto;
+    height: auto;
+    padding: .5rem 1rem;
+    background: var(--brand);
+    color: #fff;
+    z-index: 5000;
+    border-radius: .25rem;
+    outline: 3px solid #ffbf47;
+    outline-offset: 2px;
+}
+
+/* Ensure the main landmark is scrolled into view past the sticky header */
+main {
+    scroll-margin-top: 6rem;
+}
+
+/* Larger focus outlines for keyboard users */
+:focus {
+    outline: 3px solid #ffbf47;
+    outline-offset: 2px;
+}
+
+/* High-contrast headings */
+h1,
+h2,
+h3 {
+    color: #0a2540
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        transition: none !important;
+        animation: none !important
+    }
+}
+
+/* Minor styling for hero */
+.hero {
+    padding: 4rem 1rem;
+    background: linear-gradient(180deg, #f8fbff 0%, #ffffff 100%);
+}
+
+.profile-img {
+    width: 140px;
+    height: 140px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.muted {
+    color: var(--muted)
+}
+
+/* Ensure readable font sizes */
+body {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #222;
+    background: var(--bg);
+}
+
+/* Make interactive elements obvious */
+.card a {
+    color: var(--brand)
+}
+
+/* Links: visible, recognisable, and accessible (WCAG) */
+a {
+    color: var(--brand);
+    text-decoration: underline;
+    text-decoration-thickness: auto;
+}
+
+a:hover,
+a:active {
+    color: #083bb2;
+    text-decoration: underline;
+}
+
+/* Clear keyboard focus for links (use focus-visible where available) */
+a:focus-visible {
+    outline: 3px solid #ffbf47;
+    outline-offset: 2px;
+    text-decoration: underline;
+}
+
+/* Preserve button visuals (don't force underline on Bootstrap buttons) */
+a.btn,
+button,
+.btn {
+    text-decoration: none;
+}
+
+/* Strong focus style for primary hero action links to improve visibility */
+.hero a[href="#who"]:focus-visible,
+.hero a[href="#publications"]:focus-visible {
+    outline: 3px solid #ffbf47;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px rgba(255, 191, 71, 0.12);
+    background: rgba(87, 148, 228, 0.05);
+}
+
+/* Apply same visible focus to primary buttons site-wide */
+.btn-primary:focus-visible,
+.btn-outline-primary:focus-visible,
+.btn:focus-visible {
+    outline: 3px solid #ffbf47;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px rgba(255, 191, 71, 0.12);
+    background: rgba(87, 148, 228, 0.05);
+    color: black;
+}
+
+/* Make navbar items more visible when active/hovered/focused */
+.navbar .nav-link {
+    padding: 0.35rem 0.5rem;
+    /* slightly larger hit area */
+    border-radius: 0.25rem;
+    text-decoration: underline; /* Sottolineato per distinguere i link */
+}
+
+.navbar .nav-link:hover,
+.navbar .nav-link.active {
+    color: #062042;
+    /* darker text for contrast */
+    background-color: rgba(11, 92, 255, 0.08);
+    /* subtle brand-tinted background */
+    text-decoration: none; /* Rimuovi il sottolineato per indicare interazione */
+}
+
+/* Strong keyboard focus for navbar links */
+.navbar .nav-link:focus-visible,
+.navbar .nav-link:focus {
+    outline: 3px solid #ffbf47;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 4px rgba(255, 191, 71, 0.12);
+    background-color: rgba(11, 92, 255, 0.06);
+    color: #062042;
+}
+
+/* Ensure contrast for white/dark navbars (footer links use text-white so skip) */
+@media (prefers-contrast: more) {
+
+    .navbar .nav-link.active,
+    .navbar .nav-link:focus-visible {
+        background-color: rgba(11, 92, 255, 0.15);
+    }
+}
+
+.py-5 {
+    padding-top: 4rem !important;
+    padding-bottom: 3rem !important;
+}
+
+/* Back-to-top button */
+#back-to-top {
+    position: fixed;
+    right: 1rem;
+    bottom: 1.5rem;
+    z-index: 9999;
+    display: inline-flex;
+    align-items: center;
+    gap: .5rem;
+    padding: .45rem .65rem;
+    border-radius: .375rem;
+    background: #062042;
+    /* dark blue for contrast */
+    color: #fff;
+    box-shadow: 0 6px 18px rgba(6, 32, 66, 0.18);
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+/* Hidden state (not focusable) */
+#back-to-top[aria-hidden="true"] {
+    display: none;
+}
+
+#back-to-top:focus-visible {
+    outline: 3px solid #ffbf47;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 6px rgba(255, 191, 71, 0.12);
+}

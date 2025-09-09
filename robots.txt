@@ -1,0 +1,9 @@
+# robots.txt for Dr. Marco Research
+# Replace https://example.com with your real site URL before publishing
+
+User-agent: *
+Disallow:
+
+# Sitemap location (replace with your domain)
+Sitemap: https://example.com/sitemap.xml
+Host: https://example.com
