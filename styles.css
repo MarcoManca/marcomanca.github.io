@@ -52,7 +52,7 @@
 .accordion-toggle {
     background: none;
     border: none;
-    color: #0d6efd;
+    color: blue;
     text-decoration: underline;
     cursor: pointer;
     padding: 0;
@@ -74,7 +74,7 @@
 :root {
     --brand: #0b5cff;
     /* ensure good contrast */
-    --muted: #6c757d;
+    --muted: #000000;
     --bg: #ffffff;
 }
 
